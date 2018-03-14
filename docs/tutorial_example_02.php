@@ -1,6 +1,6 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 $data = \Ezc\Base\File::findRecursive(
 	"/dat/dev/ezcomponents",

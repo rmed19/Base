@@ -1,12 +1,12 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Ezc\Base\Init;
 use Ezc\Base\Interfaces\ConfigurationInitializer;
 
 // Create a custom class implementing the singleton pattern
-class customSingleton
+class CustomSingleton
 {
     protected static $instance;
 
@@ -23,7 +23,7 @@ class customSingleton
 }
 
 // Implement your configuration class
-class customSingletonConfiguration implements ConfigurationInitializer
+class CustomSingletonConfiguration implements ConfigurationInitializer
 {
     public static function configureObject( $object )
     {
@@ -33,10 +33,10 @@ class customSingletonConfiguration implements ConfigurationInitializer
 }
 
 // Register for lazy initilization
-Init::setCallback( 'customKey', 'customSingletonConfiguration' );
+Init::setCallback( 'customKey', 'CustomSingletonConfiguration' );
 
 // Configure on first initilization
-$object = customSingleton::getInstance();
+$object = CustomSingleton::getInstance();
 var_dump( $object->value );
 
 ?>

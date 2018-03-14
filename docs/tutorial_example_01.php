@@ -1,8 +1,13 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-\Ezc\Base\Base::addClassRepository( './repos', './repos/autoloads' );
+use Ezc\Base\Base;
+
+Base::addClassRepository( __DIR__.'/repos', __DIR__.'/repos/autoloads' );
+Base::autoload('erMyClass2');
+Base::autoload('erYourClass1');
+
 $myVar1 = new erMyClass2();
 $myVar1->toString();
 $yourVar1 = new erYourClass1();

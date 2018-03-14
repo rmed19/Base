@@ -1,11 +1,11 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-use Ezc\Base\Struct\FileFindContext;
+use Ezc\Base\Structs\FileFindContext;
 use Ezc\Base\File;
 
-class myProgressFinder
+class MyProgressFinder
 {
     static public function findRecursiveCallback( FileFindContext $context, $sourceDir, $fileName, $fileInfo )
     {
@@ -27,7 +27,7 @@ class myProgressFinder
     static public function findRecursive( $sourceDir, array $includeFilters = array(), array $excludeFilters = array() )
     {
         // create the context, and then start walking over the array
-        $context = new FileFindContext;
+        $context = new FileFindContext();
         File::walkRecursive( $sourceDir, $includeFilters, $excludeFilters,
                 array( 'myProgressFinder', 'findRecursiveCallback' ), $context );
 
@@ -41,6 +41,6 @@ class myProgressFinder
     }
 }
 
-$files = myProgressFinder::findRecursive( dirname( __FILE__ ) );
+$files = MyProgressFinder::findRecursive( __DIR__ );
 var_dump( $files );
 ?>
