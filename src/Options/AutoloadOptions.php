@@ -1,11 +1,12 @@
 <?php
 
-use Ezc\Base\Options;
+namespace Ezc\Base\Options;
+
 use Ezc\Base\Exceptions\PropertyNotFoundException;
 use Ezc\Base\Exceptions\ValueException;
 
 /**
- * Class containing the basic options for ezcBase' autoload.
+ * Class containing the basic Options for ezcBase' autoload.
  *
  * @property bool $preload
  *           If component preloading is enabled then as soon as one of the
@@ -20,16 +21,16 @@ use Ezc\Base\Exceptions\ValueException;
  * @package Base
  * @version //autogen//
  */
-class ezcBaseAutoloadOptions extends Options
+class AutoloadOptions extends Options
 {
     /**
      * Constructs an object with the specified values.
      *
      * @throws PropertyNotFoundException
-     *         if $options contains a property not defined
+     *         if $Options contains a property not defined
      * @throws ValueException
-     *         if $options contains a property with a value not allowed
-     * @param array(string=>mixed) $options
+     *         if $Options contains a property with a value not allowed
+     * @param array(string=>mixed) $Options
      */
     public function __construct( array $options = array() )
     {
@@ -68,4 +69,4 @@ class ezcBaseAutoloadOptions extends Options
         }
     }
 }
-?>
+

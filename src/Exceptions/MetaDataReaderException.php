@@ -1,14 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mrhamnia
- * Date: 14/03/18
- * Time: 14:48
- */
 
 namespace Ezc\Base\Exceptions;
 
-class MetaDataReaderException
+/**
+ * MetaDataReaderException is thrown whenever a non existent property
+ * is accessed in the Components library.
+ *
+ * @package Base
+ * @version //autogen//
+ */
+class MetaDataReaderException extends Exception
 {
-
+    /**
+     * Constructs a new MetaDataReaderException for the property
+     * $name.
+     *
+     * @param string $installMethod
+     */
+    function __construct( $installMethod )
+    {
+        parent::__construct( "Unknown install method  '{$installMethod}'." );
+    }
 }

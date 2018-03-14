@@ -1,6 +1,6 @@
 <?php
 
-use Ezc\Base\Struct;
+namespace Ezc\Base\Structs;
 
 /**
  * Struct which defines a repository directory.
@@ -8,7 +8,7 @@ use Ezc\Base\Struct;
  * @package Base
  * @version //autogentag//
  */
-class ezcBaseRepositoryDirectory extends Struct
+class RepositoryDirectory extends Struct
 {
     /**
      * Specifies that the entry is for the eZ Components repository.
@@ -42,7 +42,7 @@ class ezcBaseRepositoryDirectory extends Struct
     public $autoloadPath;
 
     /**
-     * Constructs a new ezcBaseRepositoryDirectory of type $type with base path
+     * Constructs a new RepositoryDirectory of type $type with base path
      * $basePath and autoload path $autoloadPath.
      *
      * @param string $type
@@ -67,11 +67,11 @@ class ezcBaseRepositoryDirectory extends Struct
      * is parsed with PHP.
      *
      * @param array(string=>mixed) $array
-     * @return ezcBaseRepositoryDirectory
+     * @return RepositoryDirectory
      */
     static public function __set_state( array $array )
     {
-        return new ezcBaseRepositoryDirectory( $array['type'], $array['basePath'], $array['autoloadPath'] );
+        return new RepositoryDirectory( $array['type'], $array['basePath'], $array['autoloadPath'] );
     }
 }
-?>
+

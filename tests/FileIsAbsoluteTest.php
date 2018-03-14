@@ -1,5 +1,7 @@
 <?php
 
+namespace Ezc\Base\Tests;
+
 use Ezc\Base\Features;
 use Ezc\Base\File;
 
@@ -7,7 +9,7 @@ use Ezc\Base\File;
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseFileIsAbsoluteTest extends ezcTestCase
+class FileIsAbsoluteTest extends \ezcTestCase
 {
     public static function testAbsoluteWindows1()
     {
@@ -216,10 +218,4 @@ class ezcBaseFileIsAbsoluteTest extends ezcTestCase
         self::assertEquals( true, File::isAbsolutePath( 'phar://test.phar/foo' ) );
         self::assertEquals( true, File::isAbsolutePath( 'http://example.com/file' ) );
     }
-
-    public static function suite()
-    {
-         return new PHPUnit_Framework_TestSuite( "ezcBaseFileIsAbsoluteTest" );
-    }
 }
-?>

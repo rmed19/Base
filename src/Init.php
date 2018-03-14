@@ -1,6 +1,9 @@
 <?php
+
+namespace Ezc\Base;
+
 /**
- * File containing the ezcBaseInit class.
+ * File containing the Init class.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -23,13 +26,18 @@
  * @version //autogentag//
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
+
+use Ezc\Base\Exceptions\InitCallbackConfiguredException;
+use Ezc\Base\Exceptions\InitInvalidCallbackClassException;
+use Ezc\Base\Interfaces\ConfigurationInitializer;
+
 /**
  * Provides a method to implement delayed initialization of objects.
  *
  * With the methods in this class you can implement callbacks to configure
  * singleton classes. In order to do so you will have to change the
  * getInstance() method of your singleton class to include a call to
- * ezcBaseInit::fetchConfig() as in the following example:
+ * Init::fetchConfig() as in the following example:
  *
  * <code>
  * <?php
@@ -38,7 +46,7 @@
  *     if ( is_null( self::$instance ) )
  *     {
  *         self::$instance = new ezcConfigurationmanager();
- *         ezcBaseInit::fetchConfig( 'ezcInitConfigurationManager', self::$instance );
+ *         Init::fetchConfig( 'ezcInitConfigurationManager', self::$instance );
  *     }
  *     return self::$instance;
  * }
@@ -46,23 +54,23 @@
  * </code>
  *
  * You will also need to configure which callback class to call. This you do
- * with the ezcBaseInit::setCallback() method. The following examples sets the
+ * with the Init::setCallback() method. The following examples sets the
  * callback classname for the configuration identifier
  * 'ezcInitConfigurationManager' to 'cfgConfigurationManager':
  *
  * <code>
  * <?php
- * ezcBaseInit::setCallback( 'ezcInitConfigurationManager', 'cfgConfigurationManager' );
+ * Init::setCallback( 'ezcInitConfigurationManager', 'cfgConfigurationManager' );
  * ?>
  * </code>
  *
  * The class 'cfgConfigurationManager' is required to implement the
- * ezcBaseConfigurationInitializer interface, which defines only one method:
+ * ConfigurationInitializer interface, which defines only one method:
  * configureObject(). An example on how to implement such a class could be:
  *
  * <code>
  * <?php
- * class cfgConfigurationManager implements ezcBaseConfigurationInitializer
+ * class cfgConfigurationManager implements ConfigurationInitializer
  * {
  *     static public function configureObject( ezcConfigurationManager $cfgManagerObject )
  *     {
@@ -79,7 +87,7 @@
  * @package Base
  * @version //autogentag//
  */
-class ezcBaseInit
+class Init
 {
     /**
      * Contains the callback where the identifier is the key of the array, and the classname to callback to the value.
@@ -98,20 +106,19 @@ class ezcBaseInit
     {
         if ( array_key_exists( $identifier, self::$callbackMap ) )
         {
-            throw new ezcBaseInitCallbackConfiguredException( $identifier, self::$callbackMap[$identifier] );
+            throw new InitCallbackConfiguredException( $identifier, self::$callbackMap[$identifier] );
         }
         else
         {
             // Check if the passed classname actually exists
-            if ( !ezcBaseFeatures::classExists( $callbackClassname, true ) )
+            if (!Features::classExists( $callbackClassname, true ) )
             {
-                throw new ezcBaseInitInvalidCallbackClassException( $callbackClassname );
+                throw new InitInvalidCallbackClassException( $callbackClassname );
             }
-
             // Check if the passed classname actually implements the interface.
-            if ( !in_array( 'ezcBaseConfigurationInitializer', class_implements( $callbackClassname ) ) )
+            if ( !in_array( ConfigurationInitializer::class, class_implements( $callbackClassname ) ) )
             {
-                throw new ezcBaseInitInvalidCallbackClassException( $callbackClassname );
+                throw new InitInvalidCallbackClassException( $callbackClassname );
             }
 
             self::$callbackMap[$identifier] = $callbackClassname;
@@ -138,4 +145,3 @@ class ezcBaseInit
         return null;
     }
 }
-?>

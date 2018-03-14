@@ -1,11 +1,11 @@
 <?php
 
-namespace Test;
+namespace Ezc\Base\Tests;
 
 use Ezc\Base\Options\Options;
 use Ezc\Base\Exceptions\PropertyNotFoundException;
 
-class OptionsTest extends Options
+class TestOptions extends Options
 {
     protected $properties = array( "foo" => "bar", "baz" => "blah" );
 

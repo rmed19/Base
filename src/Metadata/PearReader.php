@@ -16,7 +16,7 @@ use \PEAR_Registry;
  * @version //autogentag//
  * @mainclass
  */
-class ezcBaseMetaDataPearReader
+class PearReader
 {
     /**
      * Stores the PEAR_Registry to query for information
@@ -120,4 +120,4 @@ class ezcBaseMetaDataPearReader
         return array();
     }
 }
-?>
+

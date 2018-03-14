@@ -1,5 +1,9 @@
 <?php
-require_once 'tutorial_autoload.php';
+
+require_once '../vendor/autoload.php';
+
+use Ezc\Base\Init;
+use Ezc\Base\Interfaces\ConfigurationInitializer;
 
 // Create a custom class implementing the singleton pattern
 class customSingleton
@@ -11,7 +15,7 @@ class customSingleton
         if ( self::$instance === null )
         {
             self::$instance = new customSingleton();
-            ezcBaseInit::fetchConfig( 'customKey', self::$instance );
+            Init::fetchConfig( 'customKey', self::$instance );
         }
 
         return self::$instance;
@@ -19,7 +23,7 @@ class customSingleton
 }
 
 // Implement your configuration class
-class customSingletonConfiguration implements ezcBaseConfigurationInitializer
+class customSingletonConfiguration implements ConfigurationInitializer
 {
     public static function configureObject( $object )
     {
@@ -29,7 +33,7 @@ class customSingletonConfiguration implements ezcBaseConfigurationInitializer
 }
 
 // Register for lazy initilization
-ezcBaseInit::setCallback( 'customKey', 'customSingletonConfiguration' );
+Init::setCallback( 'customKey', 'customSingletonConfiguration' );
 
 // Configure on first initilization
 $object = customSingleton::getInstance();

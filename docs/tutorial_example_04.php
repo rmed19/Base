@@ -1,9 +1,13 @@
 <?php
-require 'tutorial_autoload.php';
+
+require_once '../vendor/autoload.php';
+
+use Ezc\Base\Struct\FileFindContext;
+use Ezc\Base\File;
 
 class myProgressFinder
 {
-    static public function findRecursiveCallback( ezcBaseFileFindContext $context, $sourceDir, $fileName, $fileInfo )
+    static public function findRecursiveCallback( FileFindContext $context, $sourceDir, $fileName, $fileInfo )
     {
         // ignore if we have a directory, but do print a "." and sleep for
         // extra demo time
@@ -23,8 +27,8 @@ class myProgressFinder
     static public function findRecursive( $sourceDir, array $includeFilters = array(), array $excludeFilters = array() )
     {
         // create the context, and then start walking over the array
-        $context = new ezcBaseFileFindContext;
-        ezcBaseFile::walkRecursive( $sourceDir, $includeFilters, $excludeFilters,
+        $context = new FileFindContext;
+        File::walkRecursive( $sourceDir, $includeFilters, $excludeFilters,
                 array( 'myProgressFinder', 'findRecursiveCallback' ), $context );
 
         // collect the statistics (which we don't do anything with in this example)

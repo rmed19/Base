@@ -1,12 +1,12 @@
 <?php
 
-namespace Ezc\Base;
+namespace Ezc\Base\Options;
 
 use Ezc\Base\Exceptions\PropertyNotFoundException;
 use Ezc\Base\Exceptions\ValueException;
 
 /**
- * Base options class for all eZ components.
+ * Base Options class for all eZ components.
  *
  * @package Base
  * @version //autogentag//
@@ -21,16 +21,16 @@ abstract class Options implements \ArrayAccess, \Iterator
     protected $properties;
 
     /**
-     * Construct a new options object.
+     * Construct a new Options object.
      * Options are constructed from an option array by default. The constructor
-     * automatically passes the given options to the __set() method to set them
+     * automatically passes the given Options to the __set() method to set them
      * in the class.
      *
      * @throws PropertyNotFoundException
      *         If trying to access a non existent property.
      * @throws ValueException
      *         If the value for a property is out of range.
-     * @param array(string=>mixed) $options The initial options to set.
+     * @param array(string=>mixed) $Options The initial Options to set.
      */
     public function __construct( array $options = array() )
     {
@@ -41,14 +41,14 @@ abstract class Options implements \ArrayAccess, \Iterator
     }
 
     /**
-     * Merge an array into the actual options object.
-     * This method merges an array of new options into the actual options object.
+     * Merge an array into the actual Options object.
+     * This method merges an array of new Options into the actual Options object.
      *
      * @throws PropertyNotFoundException
      *         If trying to access a non existent property.
      * @throws ValueException
      *         If the value for a property is out of range.
-     * @param array(string=>mixed) $newOptions The new options.
+     * @param array(string=>mixed) $newOptions The new Options.
      */
     public function merge( array $newOptions )
     {
@@ -63,7 +63,7 @@ abstract class Options implements \ArrayAccess, \Iterator
      * Simply returns a given option.
      *
      * @throws PropertyNotFoundException
-     *         If a the value for the property options is not an instance of
+     *         If a the value for the property Options is not an instance of
      * @param string $propertyName The name of the option to get.
      * @return mixed The option value.
      * @ignore

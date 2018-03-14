@@ -1,6 +1,6 @@
 <?php
 
-namespace Ezc\Base;
+namespace Ezc\Base\Structs;
 
 use Ezc\Base\Exceptions\PropertyNotFoundException;
 

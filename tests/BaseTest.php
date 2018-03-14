@@ -1,7 +1,11 @@
 <?php
 
+namespace Ezc\Base\Tests;
+
 use Ezc\Base\Base;
+use Ezc\Base\Exceptions\AutoloadException;
 use Ezc\Base\Exceptions\DoubleClassRepositoryPrefixException;
+use Ezc\Base\Exceptions\Exception;
 use Ezc\Base\Exceptions\FileException;
 use Ezc\Base\Exceptions\FileIoException;
 use Ezc\Base\Exceptions\FileNotFoundException;
@@ -14,34 +18,10 @@ use Ezc\Base\Exceptions\ValueException;
 use Ezc\Base\Options\AutoloadOptions;
 
 /**
- *
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- *
- * @package Base
- * @subpackage Tests
- * @version //autogentag//
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- */
-/**
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseTest extends ezcTestCase
+class BaseTest extends \ezcTestCase
 {
     /*
      * For use with the method testInvalidClass().
@@ -330,7 +310,7 @@ class ezcBaseTest extends ezcTestCase
         Base::addClassRepository( __DIR__ );
         $resultArray = Base::getRepositoryDirectories();
 
-        if ( count( $resultArray ) != 2 ) 
+        if ( count( $resultArray ) != 2 )
         {
             $this->fail( "Duplicating or missing extra autoload dirs while adding." );
         }
@@ -354,6 +334,7 @@ class ezcBaseTest extends ezcTestCase
     // this test is sorta obsolete, but we keep it around for good measure
     public function testBaseAddAndGetAutoloadDirs2()
     {
+        Base::setWorkingDirectory(__DIR__);
         Base::addClassRepository( __DIR__, __DIR__ . '/autoload' );
         Base::addClassRepository( __DIR__ . '/test_repository', __DIR__ . '/test_repository/autoload_files' );
         Base::addClassRepository( __DIR__ . '/test_repository', __DIR__ . '/test_repository/autoload_files' );
@@ -373,24 +354,26 @@ class ezcBaseTest extends ezcTestCase
         {
             $this->fail( "Extra autoload dir '{$resultArray[2]->autoloadPath}' is added incorrectly" );
         }
-
+        Base::autoload('trBasetestClass');
         self::assertEquals( true, class_exists( 'trBasetestClass', true ) );
+        Base::autoload('trBasetestClass2');
         self::assertEquals( true, class_exists( 'trBasetestClass2', true ) );
 
         try
         {
-            self::assertEquals( false, class_exists( 'trBasetestClass3', true ) );
+            Base::autoload('trBasetestClass3');
             self::fail( 'The expected exception was not thrown.' );
         }
         catch ( AutoloadException $e )
         {
             self::assertStringStartsWith( "Could not find a class to file mapping for 'trBasetestClass3'. Searched for basetest_class3_autoload.php, basetest_autoload.php, autoload.php in:", $e->getMessage());
         }
-
+        Base::autoload('trBasetestLongClass');
         self::assertEquals( true, class_exists( 'trBasetestLongClass', true ) );
 
         try
         {
+            Base::autoload('trBasetestClass4');
             class_exists( 'trBasetestClass4', true );
             self::fail( 'The expected exception was not thrown.' );
         }
@@ -438,7 +421,7 @@ class ezcBaseTest extends ezcTestCase
     public function testNoPrefixAutoload()
     {
         Base::addClassRepository( __DIR__ . '/test_repository', __DIR__ . '/test_repository/autoload_files' );
-        ezc_autoload( 'Objet' );
+        Base::autoload( 'Objet' );
         if ( !class_exists( 'Objet' ) )
         {
             $this->fail( "Autoload does not handle classes with no prefix" );
@@ -448,7 +431,7 @@ class ezcBaseTest extends ezcTestCase
     public function testNoPrefixAutoload2()
     {
         Base::addClassRepository( __DIR__ . '/issue15896' );
-        ezc_autoload( 'ab' );
+        Base::autoload( 'ab' );
     }
 
     public function testCheckDependencyExtension()
@@ -464,14 +447,14 @@ class ezcBaseTest extends ezcTestCase
     public function testInvalidClass()
     {
         $this->setExpectedException( 'AutoloadException', "Could not find a class to file mapping for 'ezcNoSuchClass'. Searched for no_such_autoload.php, no_autoload.php, autoload.php in:" );
-        self::assertEquals( false, class_exists( 'ezcNoSuchClass', true ) );
+        Base::autoload( 'ezcNoSuchClass' );
     }
 
     public function testDebug()
     {
         try
         {
-            class_exists( 'ezcTestingOne' );
+            Base::autoload('ezcTestingOne');
             self::fail( "There should have been an exception" );
         }
         catch ( AutoloadException $e )
@@ -483,7 +466,7 @@ class ezcBaseTest extends ezcTestCase
     {
         try
         {
-            $options = new AutoloadOptions;
+            $options = new AutoloadOptions();
             $options->debug = false;
             Base::setOptions( $options );
 
@@ -539,21 +522,15 @@ class ezcBaseTest extends ezcTestCase
 
     public function setup()
     {
-        $options = new AutoloadOptions;
+        $options = new AutoloadOptions();
         $options->debug = true;
         Base::setOptions( $options );
     }
 
     public function teardown()
     {
-        $options = new AutoloadOptions;
+        $options = new AutoloadOptions();
         $options->debug = true;
         Base::setOptions( $options );
     }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite("ezcBaseTest");
-    }
 }
-?>

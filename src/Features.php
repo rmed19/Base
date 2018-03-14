@@ -1,28 +1,6 @@
 <?php
-/**
- * File containing the ezcBaseFeatures class.
- *
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- *
- * @package Base
- * @version //autogentag//
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- */
+
+namespace Ezc\Base;
 
 /**
  * Provides methods needed to check for features.
@@ -30,22 +8,22 @@
  * Example:
  * <code>
  * <?php
- * echo "supports uid: " . ezcBaseFeatures::supportsUserId() . "\n";
- * echo "supports symlink: " . ezcBaseFeatures::supportsSymLink() . "\n";
- * echo "supports hardlink: " . ezcBaseFeatures::supportsLink() . "\n";
- * echo "has imagemagick identify: " . ezcBaseFeatures::hasImageIdentify() . "\n";
- * echo " identify path: " . ezcBaseFeatures::getImageIdentifyExecutable() . "\n";
- * echo "has imagemagick convert: " . ezcBaseFeatures::hasImageConvert() . "\n";
- * echo " convert path: " . ezcBaseFeatures::getImageConvertExecutable() . "\n";
- * echo "has gzip extension: " . ezcBaseFeatures::hasExtensionSupport( 'zlib' ) . "\n";
- * echo "has pdo_mysql 1.0.2: " . ezcBaseFeatures::hasExtensionSupport( 'pdo_mysql', '1.0.2' ) . "\n"
+ * echo "supports uid: " . Features::supportsUserId() . "\n";
+ * echo "supports symlink: " . Features::supportsSymLink() . "\n";
+ * echo "supports hardlink: " . Features::supportsLink() . "\n";
+ * echo "has imagemagick identify: " . Features::hasImageIdentify() . "\n";
+ * echo " identify path: " . Features::getImageIdentifyExecutable() . "\n";
+ * echo "has imagemagick convert: " . Features::hasImageConvert() . "\n";
+ * echo " convert path: " . Features::getImageConvertExecutable() . "\n";
+ * echo "has gzip extension: " . Features::hasExtensionSupport( 'zlib' ) . "\n";
+ * echo "has pdo_mysql 1.0.2: " . Features::hasExtensionSupport( 'pdo_mysql', '1.0.2' ) . "\n"
  * ?>
  * </code>
  *
  * @package Base
  * @version //autogentag//
  */
-class ezcBaseFeatures
+class Features
 {
     /**
       * Used to store the path of the ImageMagick convert utility.
@@ -193,7 +171,7 @@ class ezcBaseFeatures
      *
      * Examples:
      * <code>
-     * ezcBaseFeatures::hasFunction( 'imagepstext' );
+     * Features::hasFunction( 'imagepstext' );
      * </code>
      * will return true if support for Type 1 fonts is available with your GD
      * extension.
@@ -209,7 +187,7 @@ class ezcBaseFeatures
     /**
      * Returns if a given class exists.
      * Checks for a given class name and returns if this class exists or not.
-     * Catches the ezcBaseAutoloadException and returns false, if it was thrown.
+     * Catches the AutoloadException and returns false, if it was thrown.
      *
      * @param string $className The class to check for.
      * @param bool $autoload True to use __autoload(), otherwise false.
@@ -217,18 +195,7 @@ class ezcBaseFeatures
      */
     public static function classExists( $className, $autoload = true )
     {
-        try
-        {
-            if ( class_exists( $className, $autoload ) )
-            {
-                return true;
-            }
-            return false;
-        }
-        catch ( ezcBaseAutoloadException $e )
-        {
-            return false;
-        }
+        return class_exists( $className, $autoload );
     }
 
     /**
@@ -378,4 +345,3 @@ class ezcBaseFeatures
         self::$os            = null;
     }
 }
-?>

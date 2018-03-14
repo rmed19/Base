@@ -32,9 +32,14 @@
         }
     ],
     "autoload": {
-        "classmap": [
-            "src"
-        ]
+        "psr-4": {
+            "Ezc\\Base\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ezc\\Base\\Tests\\": "tests/"
+        }
     },
     "description": "The Base package provides the basic infrastructure that all packages rely on. Therefore every component relies on this package.",
     "homepage": "https://github.com/zetacomponents",

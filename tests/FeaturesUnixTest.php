@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Ezc\Base\Tests;
 
 use Ezc\Base\Features;
 use Ezc\Base\Exceptions\ExtensionNotFoundException;
@@ -9,7 +9,7 @@ use Ezc\Base\Exceptions\ExtensionNotFoundException;
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseFeaturesUnixTest extends ezcTestCase
+class FeaturesUnixTest extends \ezcTestCase
 {
     protected function setUp()
     {
@@ -123,7 +123,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCase
 
     public function testClassExistsAutoload()
     {
-        $this->assertEquals( true, Features::classExists( 'ezcBaseFeatures' ) );
+        $this->assertEquals( true, Features::classExists( Features::class ) );
     }
 
     public function testClassExistsNotFound()
@@ -135,10 +135,4 @@ class ezcBaseFeaturesUnixTest extends ezcTestCase
     {
         $this->assertEquals( false, Features::classExists( 'ezcBaseNonExistingClass' ) );
     }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite(__CLASS__);
-    }
 }
-?>

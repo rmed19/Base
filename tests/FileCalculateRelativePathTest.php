@@ -1,10 +1,14 @@
 <?php
+
+namespace Ezc\Base\Tests;
+
 use Ezc\Base\File;
+
 /**
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseFileCalculateRelativePathTest extends ezcTestCase
+class FileCalculateRelativePathTest extends \ezcTestCase
 {
     public function testRelative1()
     {
@@ -75,10 +79,4 @@ class ezcBaseFileCalculateRelativePathTest extends ezcTestCase
         self::assertEquals( '.', File::calculateRelativePath( '/bar/php.php', '/bar/php.php' ) );
         self::assertEquals( '.', File::calculateRelativePath( 'C:\workspace\xxx_upgrade', 'C:\workspace\xxx_upgrade' ) );
     }
-
-    public static function suite()
-    {
-         return new PHPUnit_Framework_TestSuite( "ezcBaseFileCalculateRelativePathTest" );
-    }
 }
-?>

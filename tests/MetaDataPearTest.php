@@ -1,5 +1,7 @@
 <?php
 
+namespace Ezc\Base\Tests;
+
 use Ezc\Base\MetaData\MetaData;
 use Ezc\Base\MetaData\PearReader;
 
@@ -7,7 +9,7 @@ use Ezc\Base\MetaData\PearReader;
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseMetaDataPearTest extends ezcTestCase
+class MetaDataPearTest extends \ezcTestCase
 {
     public function setUp()
     {
@@ -70,9 +72,12 @@ class ezcBaseMetaDataPearTest extends ezcTestCase
         self::assertContains( 'Translation', array_keys( $r->getComponentDependencies( 'TemplateTranslationTiein' ) ) );
     }
 
-    public static function suite()
+    /**
+     * @expectedException \Ezc\Base\Exceptions\MetaDataReaderException
+     * @throws \Ezc\Base\Exceptions\MetaDataReaderException
+     */
+    public function testConstructThrowException()
     {
-        return new PHPUnit_Framework_TestSuite( 'ezcBaseMetaDataPearTest' );
+        $r = new MetaData('unkown');
     }
 }
-?>

@@ -1,14 +1,16 @@
 <?php
 
+namespace Ezc\Base\Tests\Init;
+
 use Ezc\Base\Init;
 
 /**
- * Test class for ezcBaseInitTest.
+ * Test class for InitClass.
  *
  * @package Base
  * @subpackage Tests
  */
-class testBaseInitClass
+class InitClass
 {
     public $configured = false;
     public static $instance;
@@ -17,10 +19,9 @@ class testBaseInitClass
     {
         if ( is_null( self::$instance ) )
         {
-            self::$instance = new testBaseInitClass();
-            Init::fetchConfig( 'testBaseInit', self::$instance );
+            self::$instance = new InitClass();
+            Init::fetchConfig( 'InitTest', self::$instance );
         }
         return self::$instance;
     }
 }
-?>

@@ -1,50 +1,27 @@
 <?php
-/**
- *
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- *
- * @package Base
- * @subpackage Tests
- * @version //autogentag//
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- */
 
-require_once 'init/base_init_callback.php';
-require_once 'init/base_init_class.php';
+namespace Ezc\Base\Tests;
 
 use Ezc\Base\Init;
+use Ezc\Base\Tests\Init\InitCallback;
+use Ezc\Base\Tests\Init\InitClass;
 
 /**
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseInitTest extends ezcTestCase
+class InitTest extends \ezcTestCase
 {
     public function setUp()
     {
-        testBaseInitClass::$instance = null;
+        InitClass::$instance = null;
     }
 
     public function testCallbackWithClassThatDoesNotExists()
     {
         try
         {
-            Init::setCallback( 'testBaseInit', 'classDoesNotExist' );
+            Init::setCallback( 'InitTest', 'classDoesNotExist' );
             $this->fail( "Expected exception not thrown." );
         }
         catch ( \Ezc\Base\Exceptions\InitInvalidCallbackClassException $e )
@@ -57,25 +34,25 @@ class ezcBaseInitTest extends ezcTestCase
     {
         try
         {
-            Init::setCallback( 'testBaseInit', \Ezc\Base\Features::class );
+            Init::setCallback( 'InitTest', \Ezc\Base\Features::class );
             $this->fail( "Expected exception not thrown." );
         }
         catch ( \Ezc\Base\Exceptions\InitInvalidCallbackClassException $e )
         {
-            $this->assertEquals( "Class '\Ezc\Base\Features' does not exist, or does not implement the 'ConfigurationInitializer' interface.", $e->getMessage() );
+            $this->assertEquals( "Class 'Ezc\Base\Features' does not exist, or does not implement the 'ConfigurationInitializer' interface.", $e->getMessage() );
         }
     }
 
     public function testCallback1()
     {
-        $obj = testBaseInitClass::getInstance();
+        $obj = InitClass::getInstance();
         $this->assertEquals( false, $obj->configured );
     }
 
     public function testCallback2()
     {
-        Init::setCallback( 'testBaseInit', 'testBaseInitCallback' );
-        $obj = testBaseInitClass::getInstance();
+        Init::setCallback( 'InitTest', InitCallback::class);
+        $obj = InitClass::getInstance();
         $this->assertEquals( true, $obj->configured );
     }
     
@@ -83,18 +60,12 @@ class ezcBaseInitTest extends ezcTestCase
     {
         try
         {
-            Init::setCallback( 'testBaseInit', 'testBaseInitCallback' );
+            Init::setCallback( 'InitTest', InitCallback::class );
             $this->fail( "Expected exception not thrown." );
         }
         catch ( \Ezc\Base\Exceptions\InitCallbackConfiguredException $e )
         {
-            $this->assertEquals( "The 'testBaseInit' is already configured with callback class 'testBaseInitCallback'.", $e->getMessage() );
+            $this->assertEquals( "The 'InitTest' is already configured with callback class 'Ezc\Base\Tests\Init\InitCallback'.", $e->getMessage() );
         }
     }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite("ezcBaseInitTest");
-    }
 }
-?>

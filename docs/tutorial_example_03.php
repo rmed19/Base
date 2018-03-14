@@ -1,6 +1,7 @@
 <?php
-require 'tutorial_autoload.php';
 
-ezcBaseFile::removeRecursive( '/dat/dev/ezcomponents/trash' );
+require_once '../vendor/autoload.php';
+
+\Ezc\Base\File::removeRecursive( '/dat/dev/ezcomponents/trash' );
 
 ?>

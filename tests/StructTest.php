@@ -1,5 +1,8 @@
 <?php
 
+namespace Ezc\Base\Tests;
+
+use Ezc\Base\Exceptions\PropertyNotFoundException;
 use Ezc\Base\Structs\Struct;
 use Ezc\Base\Structs\RepositoryDirectory;
 
@@ -7,7 +10,7 @@ use Ezc\Base\Structs\RepositoryDirectory;
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseStructTest extends ezcTestCase
+class StructTest extends \ezcTestCase
 {
     public function testBaseStructGetSet()
     {
@@ -18,7 +21,7 @@ class ezcBaseStructTest extends ezcTestCase
             $struct->no_such_property = 'value';
             $this->fail( 'Expected exception was not thrown.' );
         }
-        catch ( \Ezc\Base\Exceptions\PropertyNotFoundException $e )
+        catch ( PropertyNotFoundException $e )
         {
             $this->assertEquals( "No such property name 'no_such_property'.", $e->getMessage() );
         }
@@ -28,7 +31,7 @@ class ezcBaseStructTest extends ezcTestCase
             $value = $struct->no_such_property;
             $this->fail( 'Expected exception was not thrown.' );
         }
-        catch ( \Ezc\Base\Exceptions\PropertyNotFoundException $e )
+        catch ( PropertyNotFoundException $e )
         {
             $this->assertEquals( "No such property name 'no_such_property'.", $e->getMessage() );
         }
@@ -41,10 +44,4 @@ class ezcBaseStructTest extends ezcTestCase
         $this->assertEquals( '/tmp', $dir->basePath );
         $this->assertEquals( '/tmp/autoload', $dir->autoloadPath );
     }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( "ezcBaseStructTest" );
-    }
 }
-?>

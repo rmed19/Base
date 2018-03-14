@@ -1,12 +1,17 @@
 <?php
+
+namespace Ezc\Base\Tests;
+
 use Ezc\Base\File;
 
 /**
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseFileCopyRecursiveTest extends ezcTestCase
+class FileCopyRecursiveTest extends \ezcTestCase
 {
+    private $tempDir;
+
     protected function setUp()
     {
         $this->tempDir = $this->createTempDir( __CLASS__ );
@@ -221,11 +226,6 @@ class ezcBaseFileCopyRecursiveTest extends ezcTestCase
         $this->fail( 'Expected FilePermissionException.' );
     }
 
-    public static function suite()
-    {
-         return new PHPUnit_Framework_TestSuite( __CLASS__ );
-    }
-
     public function testRecursiveCopyDirCalled0()
     {
         File::copyRecursive( 
@@ -241,4 +241,3 @@ class ezcBaseFileCopyRecursiveTest extends ezcTestCase
         $this->assertTrue( is_dir( $this->tempDir . '/dest/0' ) );
     }
 }
-?>

@@ -1,13 +1,18 @@
 <?php
+
+namespace Ezc\Base\Tests;
+
 use Ezc\Base\File;
-use Ezc\Base\FilePermissionException;
+use Ezc\Base\Exceptions\FilePermissionException;
 
 /**
  * @package Base
  * @subpackage Tests
  */
-class ezcBaseFileRemoveRecursiveTest extends ezcTestCase
+class FileRemoveRecursiveTest extends \ezcTestCase
 {
+    private $tempDir;
+
     protected function setUp()
     {
         $this->tempDir = $this->createTempDir( 'ezcBaseFileRemoveFileRecursiveTest' );
@@ -141,11 +146,6 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCase
             self::assertEquals( "The file '{$this->tempDir}/dir7' can not be opened for writing.", $e->getMessage() );
         }
         self::assertEquals( 15, count( File::findRecursive( $this->tempDir ) ) );
-    }
-
-    public static function suite()
-    {
-         return new PHPUnit_Framework_TestSuite( "ezcBaseFileRemoveRecursiveTest" );
     }
 }
 ?>
