@@ -2,7 +2,7 @@
 // modify when needed
 require '/tmp/ezcomponents-2009.1alpha1/Base/src/ezc_bootstrap.php';
 
-$md = new ezcBaseMetaData();
+$md = new \Ezc\Base\MetaData\MetaData();
 echo $md->getComponentVersion( 'Base' ), "\n";
 echo $md->getComponentVersion( 'Archive' ), "\n";
 echo $md->getComponentVersion( 'Blah' ), "\n";
